@@ -23,9 +23,14 @@ public class ParseJsonGenerator {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 String id = entry.getKey();
                 HashMap<String,Object> map2 =new HashMap<String,Object>((Map<? extends String, ?>) entry.getValue());
-                String nome= (String) map2.get("name");
+                String nome = "";
+                for (Map.Entry<String, Object> entra : map2.entrySet()) {
+                    if (entra.getKey().equals("image")) {
+                        HashMap<String, Object> map3 = new HashMap<>((Map<? extends String, ?>) entra.getValue());
+                        nome += map3.get("sprite")+"  ";
+                    }
+                }
                 writeFile.write("id: "+id+" nome: "+ nome);
-
             }
 
             writeFile.close();
