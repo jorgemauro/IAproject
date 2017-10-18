@@ -15,7 +15,25 @@ public class ParseJsonGenerator {
     JSONObject jsonObject;
     //Cria o parse de tratamento
     JSONParser parser = new JSONParser();
-    String Key="?api_key=coloque_a_key_aqui";
+    String Key="?api_key=Insira_aqui_sua_Key";
+    HashMap<Integer,Partidas> P =new HashMap<>();
+    Integer countPartidas=0;
+    public void coletaMatch(String MatchId,String region, String PlayerId){
+        JSONObject jsonObject;
+        //Cria o parse de tratamento
+        JSONParser parser = new JSONParser();
+        try {
+            Document document = Jsoup.connect("https://"+region+".api.riotgames.com/lol/match/v3/matches/"+
+                    MatchId+this.Key).ignoreContentType(true).get();
+            jsonObject = (JSONObject) parser.parse(document.text());
+            JSONArray participantIdentities  = (JSONArray) jsonObject.get("participantIdentities ");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
     public void PegaIdAccount(String name, String region){
         name.replace(" ","%20");
         try {
@@ -23,7 +41,7 @@ public class ParseJsonGenerator {
             Document document = Jsoup.connect("https://"+region+".api.riotgames.com/lol/summoner/v3/summoners/by-name/"+
                     name+this.Key).ignoreContentType(true).get();
             jsonObject = (JSONObject) parser.parse(document.text());
-            this.BuscaMatchsPlayer(jsonObject.get("accountId").toString(),region);
+            this.BuscaMatchsPlayer(jsonObject.get("accountId").toString(),region,name);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -51,7 +69,7 @@ public class ParseJsonGenerator {
             e.printStackTrace();
         }
     }
-    public void BuscaMatchsPlayer(String idAccount, String region){
+    public void BuscaMatchsPlayer(String idAccount, String region,String Nick){
 
         JSONObject jsonObject;
         //Cria o parse de tratamento
@@ -65,7 +83,7 @@ public class ParseJsonGenerator {
             JSONArray matchs = (JSONArray) array.get(0);
             matchs.forEach(match->{
                 JSONObject json= (JSONObject) match;
-                this.escreveFimArquivo("partidas"+idAccount+".txt", json.get("gameId").toString());
+                this.coletaMatch(json.get("gameId").toString(),region,idAccount);
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,7 +98,7 @@ public class ParseJsonGenerator {
         //Variaveis que irao armazenar os dados do arquivo JSON
        FileWriter writeFile = null;
        ParseJsonGenerator i=new ParseJsonGenerator();
-       i.PegaIdAccount("TrashbagDioud","br1");
+       i.PegaIdAccount("Trashbag Dioud","br1");
 
         try {
             //Salva no objeto JSONObject o que o parse tratou do arquivo
