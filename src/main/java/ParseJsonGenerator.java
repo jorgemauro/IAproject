@@ -15,19 +15,24 @@ public class ParseJsonGenerator {
     JSONObject jsonObject;
     //Cria o parse de tratamento
     JSONParser parser = new JSONParser();
-    String Key="?api_key=Insira_aqui_sua_Key";
+    String Key="?api_key=chave aqui";
     HashMap<Integer,Partidas> P =new HashMap<>();
     Integer countPartidas=0;
     public void coletaMatch(String MatchId,String region, String PlayerId){
         JSONObject jsonObject;
+        JSONObject timeLine;
         //Cria o parse de tratamento
         JSONParser parser = new JSONParser();
         try {
             Document document = Jsoup.connect("https://"+region+".api.riotgames.com/lol/match/v3/matches/"+
                     MatchId+this.Key).ignoreContentType(true).get();
+            Document document2 = Jsoup.connect("https://"+region+".api.riotgames.com/lol/match/v3/timelines/by-match/"+
+                    MatchId+this.Key).ignoreContentType(true).get();
             jsonObject = (JSONObject) parser.parse(document.text());
+            timeLine = (JSONObject) parser.parse(document2.text());
+            Partidas P = new Partidas();
             JSONArray participantIdentities  = (JSONArray) jsonObject.get("participantIdentities ");
-
+            JSONArray participants   = (JSONArray) jsonObject.get("participantIdentities ");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
@@ -76,7 +81,7 @@ public class ParseJsonGenerator {
         JSONParser parser = new JSONParser();
         try {
             Document document = Jsoup.connect("https://"+region+".api.riotgames.com/lol/match/v3/matchlists/by-account/"+
-                    idAccount+this.Key).ignoreContentType(true).get();
+            idAccount+this.Key).ignoreContentType(true).get();
             jsonObject = (JSONObject) parser.parse(document.text());
             JSONArray array = new JSONArray();
             array.add(jsonObject.get("matches"));
