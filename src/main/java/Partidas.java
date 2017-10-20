@@ -1,6 +1,9 @@
 import java.util.HashMap;
 
 public class Partidas {
+
+    String idPartida;
+
     public String getIdPartida() {
         return idPartida;
     }
@@ -21,8 +24,8 @@ public class Partidas {
         return FirstTower;
     }
 
-    public void setFirstTower(Boolean FirstTower) {
-        FirstTower = FirstTower;
+    public void setFirstTower(Boolean firstTower) {
+        FirstTower = firstTower;
     }
 
     public Boolean getFirstDragon() {
@@ -57,7 +60,7 @@ public class Partidas {
         this.rota = rota;
     }
 
-    public String getCampeao(String championId) {
+    public String getCampeao() {
         return campeao;
     }
 
@@ -97,12 +100,28 @@ public class Partidas {
         this.firstblood = firstblood;
     }
 
-    public Boolean getAralto() {
-        return aralto;
+    public Boolean getFirstaralto() {
+        return firstaralto;
     }
 
-    public void setAralto(Boolean aralto) {
-        this.aralto = aralto;
+    public void setFirstaralto(Boolean firstaralto) {
+        this.firstaralto = firstaralto;
+    }
+
+    public Boolean getFirstbaron() {
+        return firstbaron;
+    }
+
+    public void setFirstbaron(Boolean firstbaron) {
+        this.firstbaron = firstbaron;
+    }
+
+    public Long getDragons() {
+        return dragons;
+    }
+
+    public void setDragons(Long dragons) {
+        this.dragons = dragons;
     }
 
     public HashMap<Long, Boolean> getItens() {
@@ -113,7 +132,6 @@ public class Partidas {
         this.itens = itens;
     }
 
-    String idPartida;
     String NomeJogador;
     Boolean FirstTower;
     Boolean FirstDragon;
@@ -125,17 +143,11 @@ public class Partidas {
     Long gold;
     Long dano;
     Boolean firstblood;
-    Boolean aralto;
-
-    public String getCampeao() {
-        return campeao;
-    }
-
-
-
-
-
+    Boolean firstaralto;
+    Boolean firstbaron;
+    Long dragons;
     HashMap<Long,Boolean>itens;
+
     Partidas(){
         this.idPartida="";
         this.NomeJogador="";
@@ -149,7 +161,9 @@ public class Partidas {
         this.gold= Long.valueOf(0);
         this.dano= Long.valueOf(0);
         this.firstblood=false;
-        this.aralto=false;
+        this.firstaralto=false;
+        this.firstbaron=false;
+        this.dragons=Long.valueOf(0);
         this.itens =new HashMap<>();
         itens.put((long) 1001,false);
         itens.put((long) 1004,false);
